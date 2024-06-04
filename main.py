@@ -7,4 +7,8 @@ app = FastAPI()
 def health():
     return "I am alive"
 
+@app.get("/")
+def root():
+    return "welcome to expensce tracker"
+
 app.include_router(expence_router)
