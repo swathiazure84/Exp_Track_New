@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from routers.expences import expence_router
+from fastapi.responses import RedirectResponse
 app = FastAPI()
 
 
@@ -9,6 +10,6 @@ def health():
 
 @app.get("/")
 def root():
-    return "welcome to expensce tracker"
+    return RedirectResponse(url='/docs')
 
 app.include_router(expence_router)

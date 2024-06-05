@@ -9,16 +9,18 @@ expence_router = APIRouter()
 def create_user(user_name : str):
     comm_utils  = CommonUtils()
     comm_utils.writ_json(f"data/{user_name}.json",{} )
+    return "created the user"
 
 @expence_router.post("/add_income")
 def create_user(income : Income):
-    import ipdb
-    ipdb.set_trace()
     income_details = income.model_dump()
     year = income_details['date'].year
     month = income_details['date'].month
     user = income_details['user']
     income = income_details['income']
+    common_utils = CommonUtils()
+    data = common_utils.read_json(user)
+    return data
 
     #hear goes logic for updating year, month 
 
@@ -31,8 +33,6 @@ def create_user(income : Income):
 def add_expences(expence_details : ExpenseDetails):
     expence_details = expence_details.model_dump()
     user_name = expence_details['user']
-    with open(f"data/{user_name}.json", 'r') as f:
-        data = json.loads(f.read())
     data.update(expence_details)
     comm_utils  = CommonUtils()
     comm_utils.writ_json(f"data/{user_name}.json", data )
