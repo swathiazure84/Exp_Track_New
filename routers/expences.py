@@ -20,7 +20,12 @@ def create_user(income : Income):
     income = income_details['income']
     common_utils = CommonUtils()
     data = common_utils.read_json(user)
-    return data
+    if len(data) == 0:
+        income_data = common_utils.income_formater( year, month, income)
+        common_utils.writ_json(user, income_data)
+    
+        
+
 
     #hear goes logic for updating year, month 
 
