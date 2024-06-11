@@ -14,19 +14,32 @@ def create_user(user_name : str):
 @expence_router.post("/add_income")
 def create_user(income : Income):
     income_details = income.model_dump()
-    year = income_details['date'].year
-    month = income_details['date'].month
+    year = str(income_details['date'].year)
+    month = str(income_details['date'].month)
     user = income_details['user']
     income = income_details['income']
     common_utils = CommonUtils()
     data = common_utils.read_json(user)
     if len(data) == 0:
-        income_data = common_utils.income_formater( year, month, income)
+        income_data = dict(common_utils.income_formater( year, month, income))
         common_utils.writ_json(user, income_data)
+    else: 
+        if year in data.keys():
+            if month in data[year].keys():
+                data[year][month]['income'] = income
+            else: 
+                # data[year].update({month: 'income'})
+                month_dict = {}
+                month_dict['income'] = income
+                data[year][month] = month_dict
+        else:
+            income_data_obj = common_utils.income_formater( year, month, income)
+            data.update(income_data_obj)
+        common_utils.writ_json(user, data)
+
+
+
     
-        
-
-
     #hear goes logic for updating year, month 
 
     #return income_details

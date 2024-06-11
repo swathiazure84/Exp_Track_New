@@ -3,7 +3,7 @@ import json
 class CommonUtils:
     "common_utils"
     def writ_json(self, filename, data):
-        with open(filename, 'w') as f:
+        with open(f"data/{filename}.json", 'w') as f:
             f.write(json.dumps(data))
 
     def read_json(self, filename):
@@ -16,4 +16,4 @@ class CommonUtils:
         month_dict = {}
         month_dict[month] = {"income": income}
         income_dict[year] = month_dict
-        return list(income_dict)
+        return income_dict
